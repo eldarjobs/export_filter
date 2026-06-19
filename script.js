@@ -1,23 +1,6 @@
-// ==UserScript==
-// @name         Universal Table Filter & Sort (ALL IN ONE) - v6.6 COMPLETE
-// @namespace    http://tampermonkey.net/
-// @version      6.6
-// @description  Təmiz başlıq + filter + export - BÜTÜN PROBLEMLƏR HƏLL OLUNDU
-// @author       You
-// @match        *://skycatering.aerochef.online/*
-// @grant        GM_addStyle
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @grant        GM_deleteValue
-// @grant        GM_log
-// ==/UserScript==
-
 (function() {
     'use strict';
 
-    // ====================================================
-    // KONFİQURASİYA (dəyişdirilə bilər)
-    // ====================================================
     const CONFIG = {
         autoDetectTables: true,
         enableAllTables: true,
@@ -43,7 +26,6 @@
         debug: true,
         logLevel: 'info',
 
-        // BAŞLIQ TƏMİZLƏMƏ PATTERNLƏRİ
         headerCleanupPatterns: [
             { pattern: /â/g, replacement: '' },
             { pattern: /¯/g, replacement: '' },
@@ -53,22 +35,17 @@
             { pattern: /\s+/g, replacement: ' ' }
         ],
 
-        // EXPORTDA ATILACAQ BAŞLIQLAR
         excludeHeaderWords: ['edit', 'action', 'delete', 'sil', 'düymə', 'button', 'modify', 'remove', 'düzəliş', 'silmək', '', ' ']
     };
 
-    // ====================================================
-    // GLOBAL DƏYİŞƏNLƏR
-    // ====================================================
+
     let processedTables = new Map();
     let activeDropdown = null;
     let currentFilters = new Map();
     let originalTableState = new Map();
     let isInitialized = false;
 
-    // ====================================================
-    // LOGGER
-    // ====================================================
+
     const Logger = {
         levels: { none: 0, error: 1, warn: 2, info: 3, debug: 4 },
         currentLevel: CONFIG.logLevel,
